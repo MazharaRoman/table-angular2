@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { GoodsService } from '../services';
+import { Router } from '@angular/router';
+
 import { Goods } from '../store'
 import { Store } from '../store';
 import 'rxjs/Rx';
@@ -25,7 +27,7 @@ import 'rxjs/Rx';
             <td>{{good.id}}</td>
             <td>{{good.name}}</td>
             <td>{{good.description}}</td>
-            <td><button class="btn btn-warning">Update</button></td>
+            <td><button class="btn btn-warning" (click)="update(good)">Update</button></td>
             <td><button class="btn btn-danger" (click)="delete(good)">Delete</button></td>
           </tr>
          </tbody>
@@ -44,9 +46,13 @@ export class GoodsTable {
    goods: any[] = [];
     constructor(
     private store: Store,
-    private goodsService: GoodsService
+    private goodsService: GoodsService,
+    private router: Router 
   ) {
     this.goods = this.goodsService.getGoods()
+  }
+  update(good){
+    this.router.navigate(['update', good.id]);
   }
   delete(good){
     console.log(good);

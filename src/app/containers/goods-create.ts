@@ -4,7 +4,7 @@ import {
   Output,
   EventEmitter
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { GoodsService } from '../services';
 import { Goods } from '../store'
 @Component({
@@ -43,13 +43,22 @@ export class GoodsCreate {
     name: "",
     description: ""
   };
-  constructor( private goodsService: GoodsService, private router: Router ){
-    
+  constructor( private goodsService: GoodsService, private router: Router, private route: ActivatedRoute ){
+    if(route.snapshot.params['goodId'] ) {
+    this.good.id = route.snapshot.params['goodId'].toString();
+    let goods = goodsService.getGoods();
+    this.good = goods.find(x => x.id === this.good.id)
+    }
   }
 
   save() {
+    if(this.good.id !== ""){
+      this.goodsService.updateGood(this.good);
+      this.router.navigate(['']);
+    }else{
     this.good.id = Date.now().toString();
     this.goodsService.createGood(this.good);
     this.router.navigate(['']);
+    }
   }
 }

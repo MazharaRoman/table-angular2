@@ -22,15 +22,23 @@ export class GoodsService {
     return JSON.parse(this.localStorageService.get("goods"));
   }
 
+  updateGood(good){
+     let goods = [];
+    if (this.localStorageService.get("goods")){
+        goods = JSON.parse(this.localStorageService.get("goods"));
+    }
+     goods = goods.filter(x => good.id !== x.id);
+     goods.push(good);
+     this.localStorageService.set("goods", JSON.stringify(goods))
+  }
+
   deleteGood(good: Goods) {
      let goods = [];
     if (this.localStorageService.get("goods")){
         goods = JSON.parse(this.localStorageService.get("goods"));
     }
-    console.log(goods);
     
     goods = goods.filter(x => good.id !== x.id);
-    console.log(goods);
     
     this.localStorageService.set("goods", JSON.stringify(goods))
     return goods

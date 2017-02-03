@@ -9,6 +9,7 @@ export const routes: ModuleWithProviders = RouterModule.forRoot([
     children: [
       { path: '', component: GoodsTable },
       { path: 'new', component: GoodsCreate },
+      { path: 'update/:goodId', component: GoodsCreate }
     ]
   },
   { path: '**', redirectTo: '' },
