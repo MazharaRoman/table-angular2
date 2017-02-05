@@ -24,7 +24,7 @@ import { Goods } from '../store'
         <input [(ngModel)]="good.description" type="text" class="form-control" id="description" required [ngModelOptions]="{standalone: true}">
       </div>
     
-      <button (click)="save()" type="submit" class="btn btn-success">Save</button>
+      <button (click)="save(); false" class="btn btn-success">Save</button>
       <button 
         [routerLink]="['']"
         class="btn btn-default" 
@@ -54,11 +54,10 @@ export class GoodsCreate {
   save() {
     if(this.good.id !== ""){
       this.goodsService.updateGood(this.good);
-      this.router.navigate(['']);
     }else{
-    this.good.id = Date.now().toString();
-    this.goodsService.createGood(this.good);
-    this.router.navigate(['']);
+      this.good.id = Date.now().toString();
+      this.goodsService.createGood(this.good);
     }
+    this.router.navigate(['']);
   }
 }

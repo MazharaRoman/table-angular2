@@ -10,33 +10,28 @@ export class GoodsService {
   constructor(private storeHelper: StoreHelper, private localStorageService: LocalStorageService) {}
 
   createGood(good: Goods) {
-    let goods = [];
-    if (this.localStorageService.get("goods")){
-        goods = JSON.parse(this.localStorageService.get("goods"));
-    }
+    let goods = this.getGoods();
     goods.push(good);
    return this.localStorageService.set("goods", JSON.stringify(goods))
   }
 
-  getGoods(){
-    return JSON.parse(this.localStorageService.get("goods"));
+  getGoods(): Goods[]{
+    let goods = this.localStorageService.get<string>("goods");
+    if (!goods)
+     return new Array<Goods>();
+    else
+      return JSON.parse(goods);
   }
 
   updateGood(good){
-     let goods = [];
-    if (this.localStorageService.get("goods")){
-        goods = JSON.parse(this.localStorageService.get("goods"));
-    }
+     let goods = this.getGoods();
      goods = goods.filter(x => good.id !== x.id);
      goods.push(good);
      this.localStorageService.set("goods", JSON.stringify(goods))
   }
 
   deleteGood(good: Goods) {
-     let goods = [];
-    if (this.localStorageService.get("goods")){
-        goods = JSON.parse(this.localStorageService.get("goods"));
-    }
+    let goods = this.getGoods();
     
     goods = goods.filter(x => good.id !== x.id);
     
