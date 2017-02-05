@@ -24,10 +24,10 @@ export class GoodsService {
   }
 
   updateGood(good){
-     let goods = this.getGoods();
-     goods = goods.filter(x => good.id !== x.id);
-     goods.push(good);
-     this.localStorageService.set("goods", JSON.stringify(goods))
+    let goods = this.getGoods();
+    goods.forEach(x => {if (good.id === x.id) {x.name = good.name; x.description = good.description}});
+
+    this.localStorageService.set("goods", JSON.stringify(goods))
   }
 
   deleteGood(good: Goods) {
